@@ -1,0 +1,4 @@
+name = Analyzer for Customer Sentiments
+description = An analyzer built using PhpInsights Library.
+package = Insights modules
+core = 7.x
