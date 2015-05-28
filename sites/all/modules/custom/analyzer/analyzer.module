@@ -44,12 +44,18 @@ function analyzer_menu() {
 }
 
 /**
- * Implements hook_library()
+ * Implements hook_libraries_info()
  */
-function analyzer_library() {
+function analyzer_libraries_info() {
  $libraries['phpInsight'] = array(
- 
- );
+  'name' => 'PHP Insight',
+  'vendor url' => 'https://github.com/JWHennessey/phpInsight',
+  'download url' => 'https://github.com/JWHennessey/phpInsight/archive/master.zip',
+  'files' => array(
+    // 'js' => array('simple.js'), //this can be a path to the file location like array('lib/simple.js')
+    'php' => array('autoload.php'),
+  ),
+  );
  return $libraries;
 }
  
