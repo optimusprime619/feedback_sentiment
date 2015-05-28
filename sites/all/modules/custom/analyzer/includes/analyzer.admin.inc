@@ -29,14 +29,15 @@ function analyzer_file_upload_form($form_state) {
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit'),
+    '#submit' => array('analyzer_file_upload_submit'),
   );
  
   return $form;
 }
 
-function analyzer_file_upload_form_submit(&$form, $form_state){
+function analyzer_file_upload_submit(&$form, $form_state){
 
 $s = analyzer_process();
-dsm($form_state['values']);
+print_r($form_state['values']);
 
 }
