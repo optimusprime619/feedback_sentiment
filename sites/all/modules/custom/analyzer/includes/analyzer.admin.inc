@@ -31,7 +31,7 @@ function analyzer_file_upload_form($form_state) {
     '#value' => t('Submit'),
   );
   $path = libraries_get_path('phpInsight');
-  require_once DRUPAL_ROOT . $path . '/autoload.php'; 
+  require_once DRUPAL_ROOT . '/' . $path . '/autoload.php'; 
   
   try {
     $sentiment = new \PHPInsight\Sentiment();
