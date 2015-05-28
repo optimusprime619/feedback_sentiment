@@ -30,6 +30,13 @@ function analyzer_file_upload_form($form_state) {
     '#type' => 'submit',
     '#value' => t('Submit'),
   );
-
+  libraries_load('phpInsight');
+  try {
+    $sentiment = new \PHPInsight\Sentiment();
+    dsm($sentiment);
+  }
+  catch (Exception $e) {
+    dsm($e->getMessage());
+  }
   return $form;
 }
