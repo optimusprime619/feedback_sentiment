@@ -1,3 +1,9 @@
+<?php
+
+/**
+ * @file additional admin components such as file form
+ */
+
 /**
  * A form with a file upload field.
  *
