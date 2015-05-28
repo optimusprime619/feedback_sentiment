@@ -34,7 +34,7 @@ function analyzer_menu() {
   $items = array();
   $items['admin/config/analyzer'] = array(
     'title' => 'User Comment Sentiment Analyzer',
-    'type' => MENU_CALLBACK,
+    'type' => MENU_NORMAL_ITEM,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('analyzer_file_upload_form'),
     'access callback' => array('analyze user comments'),
