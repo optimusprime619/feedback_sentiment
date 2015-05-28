@@ -77,7 +77,7 @@ function analyzer_libraries_info() {
 
   try {
     $sentiment = new \PHPInsight\Sentiment();
-    dsm($sentiment);
+    
     foreach ($strings as $string) {
 
 	// calculations:
@@ -85,10 +85,10 @@ function analyzer_libraries_info() {
 	$class = $sentiment->categorise($string);
 
 	// output:
-	echo "String: $string\n";
-	echo "Dominant: $class, scores: ";
-	print_r($scores);
-	echo "\n";
+	//echo "String: $string\n";
+	//echo "Dominant: $class, scores: ";
+	//print_r($scores);
+//	echo "\n";
 }
 
   }
