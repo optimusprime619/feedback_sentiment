@@ -55,8 +55,8 @@ function analyzer_libraries_info() {
     'php' => array('autoload.php'),
     ),
   'xautoload' => function($adapter) {
-    $adapter->add('\PHPInsight', 'src');
-    // $adapter->namespaceRoot('PHPInsight', 'src');
+    // $adapter->add('\PHPInsight', 'src');
+    $adapter->namespaceRoot('\PHPInsight', 'lib');
   },
   );
  return $libraries;
