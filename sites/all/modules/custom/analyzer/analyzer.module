@@ -52,10 +52,13 @@ function analyzer_libraries_info() {
   'vendor url' => 'https://github.com/JWHennessey/phpInsight',
   'download url' => 'https://github.com/JWHennessey/phpInsight/archive/master.zip',
   'files' => array(
-    // 'js' => array('simple.js'), //this can be a path to the file location like array('lib/simple.js')
     'php' => array('autoload.php'),
-  ),
+    ),
   );
+  'xautoload' => function($adapter) {
+    $adapter->add('\PHPInsight', 'src');
+    // $adapter->namespaceRoot('PHPInsight', 'src');
+  }
  return $libraries;
 }
  
