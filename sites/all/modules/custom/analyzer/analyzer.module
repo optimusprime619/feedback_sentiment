@@ -64,7 +64,7 @@ function analyzer_libraries_info() {
  
 
 function analyzer_get_sentiment($file_value = NULL){
-  print "Checking file value \n"; var_dump($file_value);
+  //print "Checking file value \n"; var_dump($file_value);
   $path = libraries_get_path('phpInsight');
   require_once DRUPAL_ROOT . '/' . $path . '/autoload.php'; 
   $strings = array(
@@ -79,13 +79,14 @@ function analyzer_get_sentiment($file_value = NULL){
 
   try {
     $sentiment = new \PHPInsight\Sentiment();
-    
+  $result = array();    
   if (isset($file_value)){
     foreach ($file_value as $string) {
       // calculations:
       $scores = $sentiment->score($string);
       $class = $sentiment->categorise($string);
 
+$result[] = $class;
 	 //output:
 	echo "String: $string\n";
 	echo "Dominant: $class, scores: ";
@@ -94,7 +95,11 @@ function analyzer_get_sentiment($file_value = NULL){
     }
   }
    unset($file_value);
-   drupal_flush_all_caches();
+$imp = implode("\n",$result);
+file_save_data($imp,"public://output/analysis_result.txt");
+   
+ 
+
   }
   catch (Exception $e) {
     dsm($e->getMessage());

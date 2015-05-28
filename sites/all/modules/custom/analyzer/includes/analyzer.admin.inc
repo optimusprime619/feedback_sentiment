@@ -36,7 +36,7 @@ function analyzer_file_upload_form($form_state) {
 
 function analyzer_file_upload_submit(&$form, $form_state){
 
-$file = file_load($form_state['value']['file']);
+$file = file_load($form_state['values']['file']);
 $uri = $file->uri;
 $url = file_create_url($uri);
 
