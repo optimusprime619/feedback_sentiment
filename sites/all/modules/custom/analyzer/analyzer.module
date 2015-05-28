@@ -20,7 +20,7 @@ function analyzer_help($path, $arg) {
  */
 function analyzer_permission() {
   return array(
-    'analyze user comments' => array(i
+    'analyze user comments' => array(
       'title' => 'Analyze user comments',
       'description' => 'This permission enables user to upload and identify user comment sentiment',
     ),
