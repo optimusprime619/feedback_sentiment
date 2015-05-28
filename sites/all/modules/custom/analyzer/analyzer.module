@@ -54,15 +54,17 @@ function analyzer_libraries_info() {
   'files' => array(
     'php' => array('autoload.php'),
     ),
-  'xautoload' => function($adapter) {
+  /*'xautoload' => function($adapter) {
     // $adapter->add('\PHPInsight', 'src');
     $adapter->namespaceRoot('\PHPInsight', 'lib');
-  },
+  },*/
   );
  return $libraries;
 }
  
- function analyzer_process(){
+
+function analyzer_get_sentiment($file_value = NULL){
+  print "Checking file value \n"; var_dump($file_value);
   $path = libraries_get_path('phpInsight');
   require_once DRUPAL_ROOT . '/' . $path . '/autoload.php'; 
   $strings = array(
@@ -78,21 +80,24 @@ function analyzer_libraries_info() {
   try {
     $sentiment = new \PHPInsight\Sentiment();
     
-    foreach ($strings as $string) {
+  if (isset($file_value)){
+    foreach ($file_value as $string) {
+      // calculations:
+      $scores = $sentiment->score($string);
+      $class = $sentiment->categorise($string);
 
-	// calculations:
-	$scores = $sentiment->score($string);
-	$class = $sentiment->categorise($string);
-
-	// output:
-	//echo "String: $string\n";
-	//echo "Dominant: $class, scores: ";
-	//print_r($scores);
-//	echo "\n";
-}
-
+	 //output:
+	echo "String: $string\n";
+	echo "Dominant: $class, scores: ";
+	print_r($scores);
+	echo "\n";
+    }
+  }
+   unset($file_value);
+   drupal_flush_all_caches();
   }
   catch (Exception $e) {
     dsm($e->getMessage());
   }
+
  }
