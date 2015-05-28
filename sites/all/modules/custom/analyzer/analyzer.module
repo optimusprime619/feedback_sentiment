@@ -36,6 +36,7 @@ function analyzer_menu() {
     'title' => 'User Comment Sentiment Analyzer',
     'type' => MENU_CALLBACK,
     'page callback' => 'drupal_get_form',
+    'page arguments' => array('analyzer_file_upload_form'),
     'access callback' => array('analyze user comments'),
     'file' => 'analyzer.admin.inc',
   );
