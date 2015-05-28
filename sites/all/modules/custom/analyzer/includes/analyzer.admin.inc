@@ -21,7 +21,6 @@ function analyzer_file_upload_form($form_state) {
   '#title' => t('File Upload'),  
   '#type' => 'managed_file',  
   '#description' => t('Please uploade the text file.'),  
-  '#default_value' => variable_get('text_file_fid', ''), 
   '#upload_location' => 'public://textfiles/',
   '#upload_validators' => array('file_validate_extensions' => array('txt')),
   );
@@ -37,7 +36,16 @@ function analyzer_file_upload_form($form_state) {
 
 function analyzer_file_upload_submit(&$form, $form_state){
 
-$s = analyzer_process();
-print_r($form_state['values']);
+$file = file_load($form_state['value']['file']);
+$uri = $file->uri;
+$url = file_create_url($uri);
 
+$lines = file($url);
+$res = array();
+
+foreach($lines as $num => $line){
+$res[$num] = htmlspecialchars($line);
+}
+
+$s = analyzer_get_sentiment($res);
 }
