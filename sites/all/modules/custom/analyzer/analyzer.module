@@ -1,2 +1,54 @@
+<?php
 
+/**
+ * @file This module uses the Insight analyzer to process and render the sentiment analysis result
+ */
 
+/**
+ * Implements hook_help().
+ */
+function analyzer_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#analyzer':
+      return '<p>' . t("This module serves to get the input file and subject it to processing using the PHPInsight library.
+      The analyzed score information is classified as either positive/negative/neutral and written to a file for further use") . '</p>';
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function analyzer_permission() {
+  return array(
+    'analyze user comments' => array(
+      'title' => 'Analyze user comments',
+      'description' => 'This permission enables user to upload and identify user comment sentiment',
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function analyzer_menu() {
+  $items = array();
+  $items['admin/config/analyzer'] = array(
+    'title' => 'User Comment Sentiment Analyzer',
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'access callback' => array('analyze user comments'),
+    'file' => 'analyzer.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_library()
+ */
+function analyzer_library() {
+ $libraries['phpInsight'] = array(
+ 
+ );
+ return $libraries;
+}
+ 
