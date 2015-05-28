@@ -32,10 +32,32 @@ function analyzer_file_upload_form($form_state) {
   );
   $path = libraries_get_path('phpInsight');
   require_once DRUPAL_ROOT . '/' . $path . '/autoload.php'; 
-  
+  $strings = array(
+	1 => 'Weather today is rubbish',
+	2 => 'This cake looks amazing',
+	3 => 'His skills are mediocre',
+	4 => 'He is very talented',
+	5 => 'She is seemingly very agressive',
+	6 => 'Marie was enthusiastic about the upcoming trip. Her brother was also passionate about her leaving - he would finally have the house for himself.',
+	7 => 'To be or not to be?',
+);
+
   try {
     $sentiment = new \PHPInsight\Sentiment();
     dsm($sentiment);
+    foreach ($strings as $string) {
+
+	// calculations:
+	$scores = $sentiment->score($string);
+	$class = $sentiment->categorise($string);
+
+	// output:
+	echo "String: $string\n";
+	echo "Dominant: $class, scores: ";
+	print_r($scores);
+	echo "\n";
+}
+
   }
   catch (Exception $e) {
     dsm($e->getMessage());
