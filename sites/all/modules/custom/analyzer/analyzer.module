@@ -54,11 +54,11 @@ function analyzer_libraries_info() {
   'files' => array(
     'php' => array('autoload.php'),
     ),
-  );
   'xautoload' => function($adapter) {
     $adapter->add('\PHPInsight', 'src');
     // $adapter->namespaceRoot('PHPInsight', 'src');
-  }
+  },
+  );
  return $libraries;
 }
  
