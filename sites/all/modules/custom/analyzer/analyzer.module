@@ -20,7 +20,7 @@ function analyzer_help($path, $arg) {
  */
 function analyzer_permission() {
   return array(
-    'analyze user comments' => array(
+    'analyze user comments' => array(i
       'title' => 'Analyze user comments',
       'description' => 'This permission enables user to upload and identify user comment sentiment',
     ),
@@ -38,7 +38,7 @@ function analyzer_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('analyzer_file_upload_form'),
     'access arguments' => array('analyze user comments'),
-    'file' => 'analyzer.admin.inc',
+    'file' => 'includes/analyzer.admin.inc',
   );
   return $items;
 }
