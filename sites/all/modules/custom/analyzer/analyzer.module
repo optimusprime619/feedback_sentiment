@@ -37,7 +37,7 @@ function analyzer_menu() {
     'type' => MENU_NORMAL_ITEM,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('analyzer_file_upload_form'),
-    'access callback' => array('analyze user comments'),
+    'access arguments' => array('analyze user comments'),
     'file' => 'analyzer.admin.inc',
   );
   return $items;
