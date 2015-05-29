@@ -62,22 +62,13 @@ function analyzer_libraries_info() {
  return $libraries;
 }
  
-
+/**
+ * Function which helps in predicting Sentiments.
+ */
 function analyzer_get_sentiment($file_value = NULL) {
-  //print "Checking file value \n"; var_dump($file_value);
   $path = libraries_get_path('phpInsight');
   require_once DRUPAL_ROOT . '/' . $path . '/autoload.php'; 
-  // Test Data
-  $strings = array(
-    1 => 'Weather today is rubbish',
-    2 => 'This cake looks amazing',
-    3 => 'His skills are mediocre',
-    4 => 'He is very talented',
-    5 => 'She is seemingly very agressive',
-    6 => 'Marie was enthusiastic about the upcoming trip. Her brother was also passionate about her leaving - he would finally have the house for himself.',
-    7 => 'To be or not to be?',
-  );
-
+  
   try {
     $sentiment = new \PHPInsight\Sentiment();
     $result_data = array();
@@ -88,10 +79,10 @@ function analyzer_get_sentiment($file_value = NULL) {
         $class = $sentiment->categorise($string);
         $result_data[] = $class;
         //output:
-        echo "String: $string\n";
-        echo "Dominant: $class, scores: ";
-        print_r($scores);
-        echo "\n";
+        //echo "String: $string\n";
+        //echo "Dominant: $class, scores: ";
+        //print_r($scores);
+        //echo "\n";
       }
     }
     else {
