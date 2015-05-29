@@ -40,6 +40,16 @@ function analyzer_menu() {
     'access arguments' => array('analyze user comments'),
     'file' => 'includes/analyzer.admin.inc',
   );
+  $items['admin/config/analyzer/upload'] = $items['admin/config/analyzer'];
+  $items['admin/config/analyzer/upload']['type'] = MENU_DEFAULT_LOCAL_TASK;
+  $items['admin/config/analyzer/results'] = array(
+    'title' => 'Analysis Results',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'display_analysis_results',
+    // 'page arguments' => array('analyzer_file_upload_form'),
+    'access arguments' => array('analyze user comments'),
+    'file' => 'includes/analyzer.admin.inc',
+  );
   return $items;
 }
 
