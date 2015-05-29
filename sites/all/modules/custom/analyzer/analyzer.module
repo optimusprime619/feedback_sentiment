@@ -47,17 +47,16 @@ function analyzer_menu() {
  * Implements hook_libraries_info()
  */
 function analyzer_libraries_info() {
- $libraries['phpInsight'] = array(
+ $libraries['PHPInsight'] = array(
   'name' => 'PHP Insight',
   'vendor url' => 'https://github.com/JWHennessey/phpInsight',
   'download url' => 'https://github.com/JWHennessey/phpInsight/archive/master.zip',
   'files' => array(
     'php' => array('autoload.php'),
   ),
-  /*'xautoload' => function($adapter) {
-    // $adapter->add('\PHPInsight', 'src');
-    $adapter->namespaceRoot('\PHPInsight', 'lib');
-  },*/
+  'xautoload' => function($adapter) {
+    $adapter->namespaceRoot('PHPInsight', 'lib');
+  },
   );
  return $libraries;
 }
@@ -65,10 +64,13 @@ function analyzer_libraries_info() {
 /**
  * Function which helps in predicting Sentiments.
  */
-function analyzer_get_sentiment($file_value = NULL) {
-  $path = libraries_get_path('phpInsight');
-  require_once DRUPAL_ROOT . '/' . $path . '/autoload.php'; 
-  
+function analyzer_get_sentiment($file_value = NULL,$original_file_name = NULL) {
+  $loaded = libraries_load('PHPInsight'); 
+  $status = FALSE;
+  if($loaded === FALSE){
+    return $status;
+  }
+
   try {
     $sentiment = new \PHPInsight\Sentiment();
     $result_data = array();
@@ -77,12 +79,7 @@ function analyzer_get_sentiment($file_value = NULL) {
         // calculations:
         $scores = $sentiment->score($string);
         $class = $sentiment->categorise($string);
-        $result_data[] = $class;
-        //output:
-        //echo "String: $string\n";
-        //echo "Dominant: $class, scores: ";
-        //print_r($scores);
-        //echo "\n";
+        $result_data[] = $class;               
       }
     }
     else {
@@ -90,16 +87,21 @@ function analyzer_get_sentiment($file_value = NULL) {
     }
     unset($file_value);
     $sentiment_analysis_results = implode("\n", $result_data);
-    $destination_dir = "public://" . variable_get('sentiment_destination_dir', "output");
+    $destination_dir = "public://" . variable_get('sentiment_analysis_destination_dir', "output");
     $dir_writable = file_prepare_directory($destination_dir, FILE_CREATE_DIRECTORY);
     if ($dir_writable === FALSE) {
       drupal_set_message(t('Could not create or write destination directory @file', array('@file' => $dir_writable)), 'error');
+      return $status;
     }
-    file_save_data($sentiment_analysis_results, $destination_dir . "/" . REQUEST_TIME . "_analysis_result.txt");
-    drupal_set_message(t("Sentiment analysis data written to file successfully!"));
+    if(file_save_data($sentiment_analysis_results, $destination_dir . "/" . $original_file_name . "_result.txt")){
+      $status = TRUE;
+    }
+    unset($original_file_name);    
   }
   catch (Exception $e) {
-    drupal_set_message($e->getMessage());
+    drupal_set_message(t('Could not upload bcoz of error :: @e', array('@e' => $e->getMessage)), 'error');
     watchdog_exception('analyzer', $e);
   }
+
+  return $status;
 }

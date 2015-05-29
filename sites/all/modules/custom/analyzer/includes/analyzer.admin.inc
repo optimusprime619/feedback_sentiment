@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -44,12 +45,14 @@ function analyzer_file_upload_submit(&$form, $form_state) {
   if ($lines === FALSE) {
     drupal_set_message(t('Could not read source file @file', array('@file' => $url)), 'error');
   }
-  $res = array();
-
+  $result_values = array();
   foreach($lines as $num => $line) {
-    $res[$num] = htmlspecialchars($line);
+    $result_values[$num] = htmlspecialchars($line);
   }
-  // @ToDo Need to check if we need to return the sentiment analysis result and use for
-  // further processing or not to assign return value
-  $s = analyzer_get_sentiment($res);
+  $status  = analyzer_get_sentiment($result_values,basename($url,'.txt'));
+  if($status){
+    drupal_set_message(t('File :: <em>@file</em> uploaded successfully and processed with sentiment analyzer.', array('@file' => basename($url))), 'status');
+  }else{
+    drupal_set_message(t('Could not upload source file @file', array('@file' => $url)), 'error'); 
+  }
 }
