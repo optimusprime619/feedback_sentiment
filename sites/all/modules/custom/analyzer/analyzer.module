@@ -47,33 +47,31 @@ function analyzer_menu() {
  * Implements hook_libraries_info()
  */
 function analyzer_libraries_info() {
- $libraries['phpInsight'] = array(
-  'name' => 'PHP Insight',
-  'vendor url' => 'https://github.com/JWHennessey/phpInsight',
-  'download url' => 'https://github.com/JWHennessey/phpInsight/archive/master.zip',
-  'files' => array(
-    'php' => array('autoload.php'),
-  ),
-  /*'xautoload' => function($adapter) {
-    // $adapter->add('\PHPInsight', 'src');
-    $adapter->namespaceRoot('\PHPInsight', 'lib');
-  },*/
+ $libraries['PHPInsight'] = array(
+    'name' => 'PHP Insight',
+    'vendor url' => 'https://github.com/JWHennessey/phpInsight',
+    'download url' => 'https://github.com/JWHennessey/phpInsight/archive/master.zip',
+    'files' => array(
+      'php' => array('autoload.php'),
+    ),
+    'xautoload' => function($adapter) {
+      $adapter->namespaceRoot('PHPInsight', 'lib');
+    },
   );
  return $libraries;
 }
  
 
 function analyzer_get_sentiment($file_value = NULL) {
-  //print "Checking file value \n"; var_dump($file_value);
-  $path = libraries_get_path('phpInsight');
-  require_once DRUPAL_ROOT . '/' . $path . '/autoload.php'; 
+  // Library is now loaded using XAutoload
+  $loaded = libraries_load('PHPInsight');
   // Test Data
   $strings = array(
     1 => 'Weather today is rubbish',
     2 => 'This cake looks amazing',
     3 => 'His skills are mediocre',
     4 => 'He is very talented',
-    5 => 'She is seemingly very agressive',
+    5 => 'She is seemingly very aggressive',
     6 => 'Marie was enthusiastic about the upcoming trip. Her brother was also passionate about her leaving - he would finally have the house for himself.',
     7 => 'To be or not to be?',
   );
